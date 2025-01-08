@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retail Shop Employee Report</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            font-size: 14px;
+            display: block;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 93%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .report-container {
+            width: 100%;
+            max-width: 800px;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .report-container table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .report-container table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        .download-btn {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Retail Shop Employee Report</h1>
+        <div class="input-group">
+            <label for="employeeCodeInput">Enter Employee Code</label>
+            <input type="text" id="employeeCodeInput" placeholder="Enter Employee Code">
+        </div>
+        <button id="generateReportBtn">Generate Report</button>
+    </div>
+
+    <div class="report-container" id="reportContainer">
+        <h2>Employee Report</h2>
+        <table id="reportTable"></table>
+        <div id="summary"></div>
+        <button class="download-btn" id="downloadReportBtn">Download PDF</button>
+    </div>
+
+    <script>
+     const data = [{ date: "1/4/2025 16:18:36", codeName: "2303-K KAVITHA", code: "2303", name: "K KAVITHA", branchName: "Goregaon", assessorName: "Priyanka", grooming: 2, adherence: 3, sellingSkills: 4, responsibilities: 5, computerLiteracy: 1, flexibility: 5, additionalResponsibilities: "Good" }];
+
+
+        document.getElementById('generateReportBtn').addEventListener('click', () => {
+            const employeeCode = document.getElementById('employeeCodeInput').value.trim();
+            const employeeData = data.find(emp => emp.code === employeeCode);
+
+            if (!employeeData) {
+                alert("Invalid Employee Code. Please try again.");
+                return;
+            }
+
+            // Calculate the total points and cumulative percentage
+            const totalPoints = Object.keys(employeeData)
+                .filter(key => typeof employeeData[key] === 'number')
+                .reduce((sum, key) => sum + employeeData[key], 0);
+
+            const maxPoints = 6 * 5; // Assuming each rating is out of 5 and there are 6 categories
+            const cumulativePercentage = ((totalPoints / maxPoints) * 100).toFixed(2);
+
+            // Generate report on the screen
+            const table = document.getElementById('reportTable');
+            table.innerHTML = `
+                <tr><th>Field</th><th>Value</th></tr>
+                <tr><td>Date and Time</td><td>${employeeData.date}</td></tr>
+                <tr><td>Employee Code and Name</td><td>${employeeData.codeName}</td></tr>
+                <tr><td>Employee Code</td><td>${employeeData.code}</td></tr>
+                <tr><td>Employee Name</td><td>${employeeData.name}</td></tr>
+                <tr><td>Branch Name</td><td>${employeeData.branchName}</td></tr>
+                <tr><td>Assessor Name</td><td>${employeeData.assessorName}</td></tr>
+                <tr><td>Grooming, Safety, Fitness, Presentable</td><td>${employeeData.grooming}</td></tr>
+                <tr><td>Product & Process Adherence</td><td>${employeeData.adherence}</td></tr>
+                <tr><td>Selling Skills</td><td>${employeeData.sellingSkills}</td></tr>
+                <tr><td>Shares Responsibilities</td><td>${employeeData.responsibilities}</td></tr>
+                <tr><td>Computer Literacy</td><td>${employeeData.computerLiteracy}</td></tr>
+                <tr><td>Flexible, Supportive, Communicative</td><td>${employeeData.flexibility}</td></tr>
+                <tr><td>Additional Responsibilities</td><td>${employeeData.additionalResponsibilities}</td></tr>
+            `;
+
+          
+
+            // Show the report container and download button
+            document.getElementById('reportContainer').style.display = 'block';
+            document.getElementById('downloadReportBtn').style.display = 'block';
+
+            // Store the employee data for PDF download
+            window.selectedEmployee = { ...employeeData, totalPoints, cumulativePercentage };
+        });
+
+        document.getElementById('downloadReportBtn').addEventListener('click', () => {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const employeeData = window.selectedEmployee;
+
+            // Add title and employee details to the PDF
+            doc.setFontSize(18);
+            doc.text("Retail Shop Employee Report", 10, 10);
+
+            doc.setFontSize(12);
+            doc.text(`Date and Time: ${employeeData.date}`, 10, 20);
+            doc.text(`Employee Code and Name: ${employeeData.codeName}`, 10, 30);
+            doc.text(`Branch Name: ${employeeData.branchName}`, 10, 40);
+            doc.text(`Assessor Name: ${employeeData.assessorName}`, 10, 50);
+
+            // Add table to the PDF
+            const tableData = [
+                ["Criteria", "Rating"],
+                ["Grooming, Safety, Fitness, Presentable", employeeData.grooming],
+                ["Product & Process Adherence", employeeData.adherence],
+                ["Selling Skills", employeeData.sellingSkills],
+                ["Shares Responsibilities", employeeData.responsibilities],
+                ["Computer Literacy", employeeData.computerLiteracy],
+                ["Flexible, Supportive, Communicative", employeeData.flexibility],
+                ["Additional Responsibilities", employeeData.additionalResponsibilities],
+            ];
+
+            doc.autoTable({
+                head: [tableData[0]],
+                body: tableData.slice(1),
+                startY: 60,
+                theme: "grid",
+            });
+
+            // Add total points and cumulative percentage
+            const finalY = doc.previousAutoTable.finalY + 10;
+            doc.text(`Total Points: ${employeeData.totalPoints}`, 10, finalY);
+            doc.text(`Cumulative Percentage: ${employeeData.cumulativePercentage}%`, 10, finalY + 10);
+
+            // Save the PDF
+            doc.save(`${employeeData.name}_Retail_Shop_Report.pdf`);
+        });
+    </script>
+</body>
+</html>
