@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Warehouse Employee Appraisal</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #eafaf1; /* Light green background */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      background: #ffffff; /* White card background */
+      border: 1px solid #d4e8d6; /* Light green border */
+      border-radius: 10px;
+      padding: 25px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .container img {
+      display: block;
+      margin: 0 auto 20px;
+    }
+
+    h2 {
+      color: #2e7d32; /* Dark green color */
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      color: #2e7d32; /* Dark green for labels */
+      margin-bottom: 8px;
+      display: block;
+      text-align: left;
+    }
+
+    select, input, textarea, button {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #c4d9c7;
+      background-color: #f9fcfa;
+      transition: all 0.3s ease-in-out;
+      box-sizing: border-box;
+    }
+
+    select:focus, input:focus, textarea:focus {
+      border-color: #2e7d32;
+      outline: none;
+      box-shadow: 0 0 5px rgba(46, 125, 50, 0.3);
+    }
+
+    button {
+      background-color: #2e7d32; /* Green button */
+      color: white;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 8px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    button:hover {
+      background-color: #1b5e20; /* Darker green on hover */
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .container:hover {
+      transform: translateY(-5px);
+    }
+
+    .buttons {
+      position: fixed;
+      bottom: 20px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+    }
+
+    .buttonn {
+      padding: 10px 30px;
+      color: #2e7d32;
+      border: 2px solid #2e7d32;
+      border-radius: 5px;
+      text-align: center;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #fff;
+      transition: 0.3s;
+    }
+
+    .buttonn:hover {
+      background-color: #2e7d32;
+      color: #fff;
+    }
+
+    label {
+      font-size: 1rem;
+      margin-bottom: 8px;
+      display: block;
+      color: #000000;
+      text-align: left; /* Left-align the labels */
+      margin-left: 10px; /* Add a small margin from the left */
+      font-weight: bold; /* Make the label text bold */
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Branch and Employee Code Selection -->
+  <div class="container" id="branch-employee-container" style="display: flex; flex-direction: column; align-items: center; text-align: center; padding: 20px;">
+    <img src="images.png" alt="Giri Logo" style="width: 150px; margin-bottom: 20px;">
+
+    <h2 style="color: black;">Warehouse Employee Appraisal</h2>
+    <h2>Choose Branch</h2>
+    <select id="branch-select" onchange="updateEmployeeCodes()">
+      <option value="" disabled selected>Select a branch</option>
+      <option value="Warehouse">Warehouse</option>
+    </select>
+
+    <h2>Choose Employee Code</h2>
+    <select id="employee-code-select">
+      <option value="" disabled selected>Select an employee code</option>
+    </select>
+
+    <button onclick="proceedToForm()">Submit</button>
+  </div>
+
+  <!-- Appraisal Form -->
+  <div class="container hidden" id="appraisal-form-container">
+    <h2>Appraisal Form</h2>
+    <form id="appraisalForm">
+      <h2>Retail Shop Employee Assessment</h2>
+
+      <label for="employeeCode" style="display: inline-block; margin-left: 20px; margin-right: 20px;">
+        Employee Code:
+        <input type="text" id="employeeCodeField" placeholder="Enter Code" readonly>
+
+        <label for="branchName" style="width: 150px; padding: 5px; padding-left: 10px; margin: 0px 0; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+          Branch Name:</label>
+        <input type="text" id="branchNameField" placeholder="Enter Branch Name" readonly>
+    </label>
+
+
+    <label for="inchargeName">Incharge Name:</label>
+    <input type="text" id="inchargeName" name="inchargeName" placeholder="Enter Incharge Name" required>
+    
+    <label for="location">Location:</label>
+    <select id="location" required>
+        <option value="">Select Location</option>
+        <option>Main Warehouse</option>
+        <option>Annex</option>
+        <option>Repacking</option>
+        <option>Kolupadi</option>
+        <option>Despatch</option>
+        <option>Export</option>
+    </select>
+
+    <!-- Appraisal Questions -->
+    <label>1. Receiving (Counting Accuracy, Quality Checking, Damage Reporting, Updating):<br>
+        <select id = "receive" style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+            
+            <option value="Not Selected" disabled selected>Select</option>
+            <option value="1">😢 1 - Poor</option>
+            <option value="2">☹️ 2 - Fair</option>
+            <option value="3">😐 3 - Average</option>
+            <option value="4">😊 4 - Good</option>
+            <option value="5">😁 5 - Excellent</option>
+            <option value="Not Applicable">Not Applicable</option>
+        </select>
+    </label>
+
+    <label>2. Communication (Inform Category, Inward Entry, EDP):<br>
+        <select id ="communication"  style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+            
+            <option value="Not Selected" disabled selected>Select</option>
+            <option value="1">😢 1 - Poor</option>
+            <option value="2">☹️ 2 - Fair</option>
+            <option value="3">😐 3 - Average</option>
+            <option value="4">😊 4 - Good</option>
+            <option value="5">😁 5 - Excellent</option>
+            <option value="Not Applicable">Not Applicable</option>
+        </select>
+    </label>
+
+    <label>3. Stacking (Update Bin-Card, Organise Shelf Space, Number Skills):<br>
+        <select id = "stack" style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+            
+            <option value="Not Selected" disabled selected>Select</option>
+            <option value="1">😢 1 - Poor</option>
+            <option value="2">☹️ 2 - Fair</option>
+            <option value="3">😐 3 - Average</option>
+            <option value="4">😊 4 - Good</option>
+            <option value="5">😁 5 - Excellent</option>
+            <option value="Not Applicable">Not Applicable</option>
+        </select>
+    </label>
+
+    <label>4. Coordination (Teamwork, Accurate Info to Category Person):<br>
+        <select id ="coord" style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+            
+            <option value="Not Selected" disabled selected>Select</option>
+            <option value="1">😢 1 - Poor</option>
+            <option value="2">☹️ 2 - Fair</option>
+            <option value="3">😐 3 - Average</option>
+            <option value="4">😊 4 - Good</option>
+            <option value="5">😁 5 - Excellent</option>
+            <option value="Not Applicable">Not Applicable</option>
+        </select>
+    </label>
+
+    <label>5. Ready for Higher Responsibilities (Category Incharge):<br>
+        <select id ="ready"  style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+            
+            <option value="Not Selected" disabled selected>Select</option>
+            <option value="1">😢 1 - Poor</option>
+            <option value="2">☹️ 2 - Fair</option>
+            <option value="3">😐 3 - Average</option>
+            <option value="4">😊 4 - Good</option>
+            <option value="5">😁 5 - Excellent</option>
+            <option value="Not Applicable">Not Applicable</option>
+        </select>
+    </label>
+
+    <label>6. Picking (Accuracy, Update Bin-Card, Provide Info):<br>
+        <select id ="pick"  style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+            
+            <option value="Not Selected" disabled selected>Select</option>
+            <option value="1">😢 1 - Poor</option>
+            <option value="2">☹️ 2 - Fair</option>
+            <option value="3">😐 3 - Average</option>
+            <option value="4">😊 4 - Good</option>
+            <option value="5">😁 5 - Excellent</option>
+            <option value="Not Applicable">Not Applicable</option>
+        </select>
+    </label>
+
+    <label>7. Multi-tasking (Handle Warehouse Operations):<br>
+        <select id ="multi"  style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+            
+            <option value="Not Selected" disabled selected>Select</option>
+            <option value="1">😢 1 - Poor</option>
+            <option value="2">☹️ 2 - Fair</option>
+            <option value="3">😐 3 - Average</option>
+            <option value="4">😊 4 - Good</option>
+            <option value="5">😁 5 - Excellent</option>
+            <option value="Not Applicable">Not Applicable</option>
+        </select>
+    </label>
+
+    <label>8. Maintain Records with Accurate Details:<br>
+        <select id = "rec" style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+            
+            <option value="Not Selected" disabled selected>Select</option>
+            <option value="1">😢 1 - Poor</option>
+            <option value="2">☹️ 2 - Fair</option>
+            <option value="3">😐 3 - Average</option>
+            <option value="4">😊 4 - Good</option>
+            <option value="5">😁 5 - Excellent</option>
+            <option value="Not Applicable">Not Applicable</option>
+        </select>
+    </label>
+
+    <label>9. Computer Literacy (Work Independently in Systems):<br>
+        <select id = "comp" style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+            
+            <option value="Not Selected" disabled selected>Select</option>
+            <option value="1">😢 1 - Poor</option>
+            <option value="2">☹️ 2 - Fair</option>
+            <option value="3">😐 3 - Average</option>
+            <option value="4">😊 4 - Good</option>
+            <option value="5">😁 5 - Excellent</option>
+            <option value="Not Applicable">Not Applicable</option>
+        </select>
+    </label>
+
+    <label>10. Grooming & Safety (Self-Discipline, Aware, Fit):<br>
+        <select id = "groom" style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+            
+            <option value="Not Selected" disabled selected>Select</option>
+            <option value="1">😢 1 - Poor</option>
+            <option value="2">☹️ 2 - Fair</option>
+            <option value="3">😐 3 - Average</option>
+            <option value="4">😊 4 - Good</option>
+            <option value="5">😁 5 - Excellent</option>
+            <option value="Not Applicable">Not Applicable</option>
+        </select>
+    </label>
+
+    <label>11. Punctuality & Commitment to Work:<br>
+        <select id ="time"  style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+            
+            <option value="Not Selected" disabled selected>Select</option>
+            <option value="1">😢 1 - Poor</option>
+            <option value="2">☹️ 2 - Fair</option>
+            <option value="3">😐 3 - Average</option>
+            <option value="4">😊 4 - Good</option>
+            <option value="5">😁 5 - Excellent</option>
+            <option value="Not Applicable">Not Applicable</option>
+        </select>
+    </label>
+
+   <label for="achievements">12. Can Be Promoted to Next Level (Achievements):</label>
+<textarea id="achievements" name="achievements" rows="3" placeholder="Provide explanation..." ></textarea>
+
+    
+
+    <button type="submit">Submit Appraisal</button>
+</form>
+
+  </div>
+
+  <script>
+
+const branchEmployeeCodes = {
+  "Warehouse": [
+    "1023-MURUGAN N",
+    "1654-RAVI M",
+    "1030-LAKSHMI DEVI U",
+    "1031-KARTHIK S",
+    "1032-MEENAKSHI S",
+    "1034-KOTTI D",
+    "1045-RAJINI B",
+    "1046-VIJAYA BASKARAN R",
+    "1053-PREMA B",
+    "1062-ANGEL A",
+    "1066-SRIDHAR S",
+    "1073-BALASUBRAMANIAN S",
+    "1079-VANITHA N",
+    "1080-SAKTHIVEL D",
+    "1084-SUMATHI M",
+    "1088-RAVI G",
+    "1093-GEETHA R",
+    "1094-PADMAVATHI U",
+    "1095-SUTHA B",
+    "1099-PADMA P",
+    "1100-CHELLADURAI M",
+    "1107-THANGARAJ S",
+    "1108-ADITHYAN G",
+    "1110-JAYASURIYA A",
+    "1113-ELUMALAI R",
+    "1114-SATHISH S",
+    "1117-VEERAMANI C",
+    "1132-NAVALAN PANNEERSELVAM",
+    "1283-DHANALAKSHMI.N",
+    "1287-AMALA.I",
+    "1152-SARGUNAM SHANKAR",
+    "1153-BHARATH NAGALINGAM",
+    "1154-VALLI M",
+    "1162-SONIYA BALRAJ",
+    "1164-GIRIJA R",
+    "1166-SANDHIYA RAJESH",
+    "1167-JAYAN P",
+    "1186-CHITRA GOPU",
+    "1197-MAHALAKSHMI S",
+    "1222-SUSAI REGI ANITHA V",
+    "1282-VIJAYAKUMARI EMROSE",
+    "1291-PREMAJAISHANKAR",
+    "1294-ANITHA.R",
+    "1292-VANITHA.S",
+    "1296-ESAIVANI",
+    "1303-KALAIVANI",
+    "1311-KARTHICK SEKAR",
+    "1331-Ramkumar",
+    "1385-VIMAL SUBRAMANI",
+    "1387-VIJI S",
+    "1406-MANIKANDAN S R",
+    "1407-VIMAL MAGENDIRAN",
+    "1414-MALATHY K",
+    "1416-THIRUMAL SUBRAMANIYAM",
+    "1449-SASIKALA EKANATHAN",
+    "1450-GANESH D",
+    "1462-BHUVANESWARI M",
+    "1499-RAJESHWARI P",
+    "1533-CHANDADEVI M",
+    "1538-SURIYAKALA KUMARAN",
+    "1539-DEVI.D",
+    "1544-MALARVIZHI.R",
+    "1557-SARATHI PRABAGARAN",
+    "1588-DEEPIKA PRABAGARAN",
+    "1575-PRIYADARSHINI SURESH",
+    "1581-ANTONY EZHILARASI",
+    "1630-RAJAKUMARI.B",
+    "1631-ROSEE",
+    "1632-GAYATHRI.K",
+    "1634-PADMAVATHI.G",
+    "1670-SHEEBASHALINI J",
+    "1691-VINAYAK K",
+    "1685-S SHALINI",
+    "1695-VEERAN VEERAPANDIYAN",
+    "1696-SARANYA AGILAN",
+    "1697-BAKKIYARAJ.E",
+    "1708-SARATHBABU",
+    "1704-SUBRAMANIAN RENGANATHAN",
+    "1707-JAGADEESH M",
+    "1752-RADHIKA RATHINAM",
+    "1737-SIVAGAMI S",
+    "1739-KALAIVANI PERUMAL",
+    "1735-GOKULAKRISHNAN S",
+    "1741-MALARVIZHI RUTHRASEGAR",
+    "1742-NITIYA SARANRAJ",
+    "1771-BABU KESAVAN",
+    "1782-R TEENADHARHINI",
+    "1762-PRAVEENA",
+    "1792-KARANKUMAR MURALI",
+    "1800-BENINAMARY",
+    "1823-KRISHNAN MOORTHY",
+    "1827-PUGAZHARASU KUMAR",
+    "1821-R LAKSHMI",
+    "1825-R CHITRA",
+    "1828-SARAVANAN SOMASUNDHARAM",
+    "1829-SANGEETHA VENKATESAN",
+    "1855-S VASANTHI",
+    "1873-S KATHIRVEL",
+    "1852-LATHA",
+    "1864-GOKUL UMAPATHY",
+    "1880-BHUVANESWARI SENGUTTUVAN",
+    "1882-MANJULA KARTHIKEYAN",
+    "1888-NEELAVENI JAYARAMAN",
+    "1883-BALAMURUGAN RAMAMOORTHY",
+    "1896-PRIYA K",
+    "1928-SURESHKUMAR NAGARATHINAM",
+    "1961-P. RAGINI",
+    "1966-VIZHIVENDHAN ANBALAGAN",
+    "1969-RANJITHKUMAR A",
+    "1995-MALLIGA SENGUTTUVAN",
+    "1996-T SUNDARI",
+    "1980-VIGNESH K",
+    "2014-UMA MAHESHWARI",
+    "2032-GOMATHI P",
+    "2026-PUNITHA GNANAPRAKASAM",
+    "2036-AMALA P",
+    "2035-THIRUNAVUKKARASU MURUGESAN",
+    "2040-PARAMESHWARI CHANDRASEKAR",
+    "2076-GOMATHI K",
+    "2079-GOWTHAM SANJAY MOORTHY",
+    "2105-SRI PRIYA K",
+    "2107-DILLEESWARI M",
+    "2108-CHITHAMBARAM THIRUPATHI",
+    "2112-PONNI ARULJOTHI",
+    "2113-M MANGALAKSHMI",
+    "2114-SUMATHI V",
+    "2123-DEVI RAMACHANDIRAN",
+    "2137-V NIRANJAN",
+    "2149-JEEVA K",
+    "2150-RAGUPATHY S",
+    "2154-KUMARAVEL S",
+    "2165-KOKILA KAMARAJ",
+    "2182-ANANDHI DHEENEDHAYALAN",
+    "2184-REKHA P",
+    "2208-KALPANA S",
+    "2211-SARAVANAN SUNDAR",
+    "2227-GAYATHRI",
+    "2243-UMA MAGESHWARI ANANDHAN",
+    "2242-GNANAMBAL R",
+    "2250-SARANYA D",
+    "2252-SEETHA M",
+    "2282-PRAVEEN GOVINDASAMI",
+    "2286-P PRATHIMA",
+    "2291-THENMOZHI DEVENDRAN",
+    "2292-CHANRAKUMARI",
+    "2295-PRIYADHARSHINI R",
+    "2299-V MURUGESWARI",
+    "2301-SINTHU",
+    "2313-NITHIA SREE SAYEE RAMAN",
+    "2322-MAGESHWARAN M",
+    "2323-ISWARYA KUMAR",
+    "2324-KAVIYADHARSHINI",
+    "2328-REKHA LOGANADHAN"
+  ]
+};
+
+ 
+    
+    function updateEmployeeCodes() {
+      const branch = document.getElementById("branch-select").value;
+      const employeeCodeSelect = document.getElementById("employee-code-select");
+      employeeCodeSelect.innerHTML = '<option value="" disabled selected>Select an employee code</option>';
+
+      if (branch && branchEmployeeCodes[branch]) {
+        branchEmployeeCodes[branch].forEach(code => {
+          const option = document.createElement("option");
+          option.value = code;
+          option.textContent = code;
+          employeeCodeSelect.appendChild(option);
+        });
+      }
+    }
+
+    function proceedToForm() {
+      const branch = document.getElementById("branch-select").value;
+      const employeeCode = document.getElementById("employee-code-select").value;
+
+      if (!branch || !employeeCode) {
+        alert("Please select both a branch and an employee code.");
+        return;
+      }
+
+      // Show appraisal form and populate fields
+      document.getElementById("branch-employee-container").style.display = "none";
+      document.getElementById("appraisal-form-container").style.display = "block";
+      document.getElementById("branchNameField").value = branch;
+      document.getElementById("employeeCodeField").value = employeeCode;
+    }
+
+    document.getElementById('appraisalForm').addEventListener('submit', function (e) {
+  e.preventDefault(); // Prevent the default form submission
+
+  // Array of field IDs for appraisal questions
+  const requiredFields = [
+    'location',
+    'receive',
+    "communication",
+    "stack",
+    "coord",
+    "ready",
+    "pick",
+    "multi",
+    "rec",
+    "comp",
+    "groom",
+    "time",
+    "achievements"
+  ];
+
+  // Add IDs for all select fields in the form
+  const selectFields = document.querySelectorAll('select[required]');
+  selectFields.forEach(select => requiredFields.push(select.id));
+
+  let allFieldsFilled = true;
+
+  // Loop through each required field and check if it is filled
+  requiredFields.forEach(function (fieldId) {
+    const fieldElement = document.getElementById(fieldId);
+
+    // Check if it's a select element or other input types
+    if (fieldElement && fieldElement.tagName === 'SELECT') {
+      if (fieldElement.value === '' || fieldElement.value === 'Not Selected') {
+        allFieldsFilled = false;
+      }
+    } else if (fieldElement && fieldElement.tagName !== 'SELECT') {
+      if (fieldElement.value.trim() === '') {
+        allFieldsFilled = false;
+      }
+    }
+  });
+
+  // Alert the user if any field is not filled
+  if (!allFieldsFilled) {
+    alert('Please answer all questions before submitting.');
+    return;
+  }
+
+  // Collect form data
+  const formData = new URLSearchParams();
+  formData.append('employeeCode', document.getElementById('employeeCodeField').value);
+  formData.append('branchName', document.getElementById('branchNameField').value);
+  formData.append('inchargeName', document.getElementById('inchargeName').value);
+  formData.append('location', document.getElementById('location').value);
+
+  // Collect responses for the appraisal questions
+  const selectAnswers = document.querySelectorAll('select');
+  selectAnswers.forEach(select => {
+    formData.append(select.id, select.value);
+  });
+
+  // Add achievements field value manually
+  const achievements = document.getElementById('achievements').value.trim();
+  formData.append('achievements', achievements);
+
+  // Send data to the server
+  fetch('https://script.google.com/macros/s/AKfycbza4Ea3s4TXJMqr2UlI1DBgoad6zyEAnqpCVqUjGeV_iP4u2HhpZ_UPUFEZqALfm5N4fA/exec', {
+    method: 'POST',
+    body: formData.toString(),
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === 'success') {
+        alert('Retail Shop Employee Assessment submitted successfully!');
+        // Reset form and return to the initial screen
+        document.getElementById('appraisalForm').reset();
+        document.getElementById('branch-employee-container').style.display = 'flex';
+        document.getElementById('appraisal-form-container').style.display = 'none';
+      } else {
+        alert('Error: ' + data.message);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('An error occurred. Please try again.');
+    });
+});
+
+
+  </script>
+
+<div class="buttons">
+  <a href="index.html" class="buttonn">Back</a>
+ 
+  <a href="#" onclick="forwardToAssessment()" class="buttonn">Next</a>
+  <script>
+      function forwardToAssessment() {
+          // Redirect to behaviour_self_assessment.html
+          window.location.href = 'index.html';
+      }
+  </script>
+ 
+</div>
+</body>
+</html>
