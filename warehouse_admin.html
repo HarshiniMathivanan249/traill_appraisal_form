@@ -120,8 +120,217 @@
     </div>
 
     <script>
-     const data = [{ date: "1/4/2025 21:46:20", code: "2206", name: "NISHA SIVAMANI", location: "Kolupadi", inchargeName: "Pri", receiving: 4, communication: 3, stacking: 1, coordination: 4, higherResponsibilities: 5, picking: 1, multitasking: 2, maintainRecords: 4, computerLiteracy: 3, grooming: 5, punctuality: 1, promotion: "Good" }];
+        // Sample data with potential 'N/A' values in rating fields
+        const data = [
+ 
+  {
+    date: "1/25/2025 16:22:52",
+    code: "1079",
+    name: "VANITHA N",
+    location: "Annex",
+    inchargeName: "JAGADISH BABU",
+    receiving: 4,
+    communication: 2,
+    stacking: 3,
+    coordination: 3,
+    higherResponsibilities: 4,
+    picking: 4,
+    multitasking: 4,
+    maintainRecords: 3,
+    computerLiteracy: 3,
+    grooming: 4,
+    punctuality: 4,
+    promotion: "To observe for another year"
+  },
 
+  {
+    date: "1/25/2025 16:23:55",
+    code: "1095",
+    name: "SUTHA B",
+    location: "Main Warehouse",
+    inchargeName: "JAGADISH BABU",
+    receiving: 4,
+    communication: 4,
+    stacking: 4,
+    coordination: 4,
+    higherResponsibilities: 4,
+    picking: 4,
+    multitasking: 3,
+    maintainRecords: 2,
+    computerLiteracy: 4,
+    grooming: 4,
+    punctuality: 4,
+    promotion: "good"
+  },
+  {
+    date: "1/25/2025 16:44:24",
+    code: "1670",
+    name: "SHEEBASHALINI J",
+    location: "Main Warehouse",
+    inchargeName: "Lakshmi Devi",
+    receiving: 4,
+    communication: 3,
+    stacking: 4,
+    coordination: 4,
+    higherResponsibilities: 4,
+    picking: 4,
+    multitasking: 4,
+    maintainRecords: 4,
+    computerLiteracy: 2,
+    grooming: 4,
+    punctuality: 4,
+    promotion: "section incharge"
+  },
+  {
+    date: "1/25/2025 16:52:48",
+    code: "1197",
+    name: "MAHALAKSHMI S",
+    location: "Main Warehouse",
+    inchargeName: "JAGADESH BABU",
+    receiving: 4,
+    communication: 4,
+    stacking: 5,
+    coordination: 3,
+    higherResponsibilities: 5,
+    picking: 5,
+    multitasking: 4,
+    maintainRecords: 5,
+    computerLiteracy: 3,
+    grooming: 4,
+    punctuality: 5,
+    promotion: "CATEGORY MERCHANDISER"
+  },
+  {
+    date: "1/25/2025 17:01:59",
+    code: "1095",
+    name: "SUTHA B",
+    location: "Main Warehouse",
+    inchargeName: "JAGADESH BABU.P",
+    receiving: 4,
+    communication: 4,
+    stacking: 3,
+    coordination: 3,
+    higherResponsibilities: 4,
+    picking: 4,
+    multitasking: 4,
+    maintainRecords: 4,
+    computerLiteracy: 3,
+    grooming: 4,
+    punctuality: 4,
+    promotion: "SYSTEM OPERATOR"
+  },
+  {
+    date: "1/25/2025 16:25:57",
+    code: "1073",
+    name: "BALASUBRAMANIAN S",
+    location: "Main Warehouse",
+    inchargeName: "JAGADISH BABU",
+    receiving: "Not Applicable",
+    communication: 4,
+    stacking: "Not Applicable",
+    coordination: 3,
+    higherResponsibilities: 3,
+    picking: 4,
+    multitasking: 3,
+    maintainRecords: 4,
+    computerLiteracy: 2,
+    grooming: 3,
+    punctuality: 5,
+    promotion: "good"
+  },
+  {
+    date: "1/25/2025 16:27:26",
+    code: "1080",
+    name: "SAKTHIVEL D",
+    location: "Main Warehouse",
+    inchargeName: "JAGADISH BABU",
+    receiving: "Not Applicable",
+    communication: 4,
+    stacking: 4,
+    coordination: 4,
+    higherResponsibilities: 4,
+    picking: "Not Applicable",
+    multitasking: 4,
+    maintainRecords: 3,
+    computerLiteracy: 4,
+    grooming: 5,
+    punctuality: 4,
+    promotion: "yes"
+  },
+  {
+    date: "1/25/2025 17:10:29",
+    code: "1632",
+    name: "GAYATHRI.K",
+    location: "Main Warehouse",
+    inchargeName: "JAGADESH BABU.P",
+    receiving: 4,
+    communication: 3,
+    stacking: 3,
+    coordination: 4,
+    higherResponsibilities: 5,
+    picking: 5,
+    multitasking: 4,
+    maintainRecords: 4,
+    computerLiteracy: 4,
+    grooming: 5,
+    punctuality: 4,
+    promotion: "SYSTEM OPERATOR"
+  },
+  {
+    date: "1/25/2025 17:15:27",
+    code: "1099",
+    name: "PADMA P",
+    location: "Annex",
+    inchargeName: "VALLI",
+    receiving: 3,
+    communication: 5,
+    stacking: 4,
+    coordination: 5,
+    higherResponsibilities: 4,
+    picking: 5,
+    multitasking: 5,
+    maintainRecords: 4,
+    computerLiteracy: 1,
+    grooming: 5,
+    punctuality: 5,
+    promotion: "SECTION INCHARGE"
+  },
+  {
+    date: "1/25/2025 17:23:07",
+    code: "1062",
+    name: "ANGEL A",
+    location: "Repacking",
+    inchargeName: "BHUVANA MADAM",
+    receiving: 4,
+    communication: 5,
+    stacking: 4,
+    coordination: 5,
+    higherResponsibilities: 5,
+    picking: 5,
+    multitasking: 4,
+    maintainRecords: 5,
+    computerLiteracy: 1,
+    grooming: 4,
+    punctuality: 4,
+    promotion: "BHOJANAM INCHARGE"
+  }
+];
+
+
+        // Define the rating fields explicitly
+        const ratingFields = [
+            "receiving", 
+            "communication", 
+            "stacking", 
+            "coordination", 
+            "higherResponsibilities", 
+            "picking", 
+            "multitasking", 
+            "maintainRecords", 
+            "computerLiteracy", 
+            "grooming", 
+            "punctuality"
+        ];
 
         document.getElementById('generateReportBtn').addEventListener('click', () => {
             const employeeCode = document.getElementById('employeeCodeInput').value.trim();
@@ -132,13 +341,14 @@
                 return;
             }
 
-            // Calculate the total points and cumulative percentage
-            const totalPoints = Object.keys(employeeData)
-                .filter(key => typeof employeeData[key] === 'number')
-                .reduce((sum, key) => sum + employeeData[key], 0);
+            // Calculate total points and max points based on applicable ratings
+            const applicableRatings = ratingFields.filter(key => typeof employeeData[key] === 'number');
 
-            const maxPoints = 10 * 11; // Assuming each rating is out of 5 and there are 11 rating categories
-            const cumulativePercentage = ((totalPoints / maxPoints) * 100).toFixed(2);
+            const totalPoints = applicableRatings.reduce((sum, key) => sum + employeeData[key], 0);
+            const maxPointsPerCategory = 5; // Assuming each rating is out of 5
+            const maxPoints = applicableRatings.length * maxPointsPerCategory;
+
+            const cumulativePercentage = maxPoints === 0 ? "N/A" : ((totalPoints / maxPoints) * 100).toFixed(2);
 
             // Generate report on the screen
             const table = document.getElementById('reportTable');
@@ -149,21 +359,27 @@
                 <tr><td>Employee Name</td><td>${employeeData.name}</td></tr>
                 <tr><td>Location</td><td>${employeeData.location}</td></tr>
                 <tr><td>Incharge Name</td><td>${employeeData.inchargeName}</td></tr>
-                <tr><td>Receiving</td><td>${employeeData.receiving}</td></tr>
-                <tr><td>Communication</td><td>${employeeData.communication}</td></tr>
-                <tr><td>Stacking</td><td>${employeeData.stacking}</td></tr>
-                <tr><td>Coordination</td><td>${employeeData.coordination}</td></tr>
-                <tr><td>Higher Responsibilities</td><td>${employeeData.higherResponsibilities}</td></tr>
-                <tr><td>Picking</td><td>${employeeData.picking}</td></tr>
-                <tr><td>Multi-tasking</td><td>${employeeData.multitasking}</td></tr>
-                <tr><td>Maintain Records</td><td>${employeeData.maintainRecords}</td></tr>
-                <tr><td>Computer Literacy</td><td>${employeeData.computerLiteracy}</td></tr>
-                <tr><td>Grooming & Safety</td><td>${employeeData.grooming}</td></tr>
-                <tr><td>Punctuality</td><td>${employeeData.punctuality}</td></tr>
+            `;
+
+            // Append rating fields to the table
+            ratingFields.forEach(field => {
+                const displayName = field.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+                const value = typeof employeeData[field] === 'number' ? employeeData[field] : "N/A";
+                table.innerHTML += `<tr><td>${displayName}</td><td>${value}</td></tr>`;
+            });
+
+            // Append non-rating fields
+            table.innerHTML += `
                 <tr><td>Promotion</td><td>${employeeData.promotion}</td></tr>
             `;
 
-         
+            // Display summary
+            const summary = document.getElementById('summary');
+            summary.innerHTML = `
+                <p><strong>Total Points:</strong> ${totalPoints}</p>
+                <p><strong>Max Points:</strong> ${maxPoints}</p>
+                <p><strong>Cumulative Percentage:</strong> ${cumulativePercentage === "N/A" ? "N/A" : cumulativePercentage + "%"}</p>
+            `;
 
             // Show the report container and download button
             document.getElementById('reportContainer').style.display = 'block';
@@ -171,55 +387,59 @@
 
             // Store the employee data for PDF download
             window.selectedEmployee = { ...employeeData, totalPoints, cumulativePercentage };
+            window.applicableRatings = applicableRatings; // Store applicable ratings for PDF generation
         });
 
         document.getElementById('downloadReportBtn').addEventListener('click', () => {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             const employeeData = window.selectedEmployee;
+            const applicableRatings = window.applicableRatings;
 
             // Add title and employee details to the PDF
             doc.setFontSize(18);
-            doc.text("Warehouse Employee Report", 10, 10);
+            doc.text("Warehouse Employee Report", 14, 20);
 
             doc.setFontSize(12);
-            doc.text(`Date and Time: ${employeeData.date}`, 10, 20);
-            doc.text(`Employee Code: ${employeeData.code}`, 10, 30);
-            doc.text(`Employee Name: ${employeeData.name}`, 10, 40);
-            doc.text(`Location: ${employeeData.location}`, 10, 50);
-            doc.text(`Incharge Name: ${employeeData.inchargeName}`, 10, 60);
+            let yPosition = 30;
+            doc.text(`Date and Time: ${employeeData.date}`, 14, yPosition);
+            yPosition += 10;
+            doc.text(`Employee Code: ${employeeData.code}`, 14, yPosition);
+            yPosition += 10;
+            doc.text(`Employee Name: ${employeeData.name}`, 14, yPosition);
+            yPosition += 10;
+            doc.text(`Location: ${employeeData.location}`, 14, yPosition);
+            yPosition += 10;
+            doc.text(`Incharge Name: ${employeeData.inchargeName}`, 14, yPosition);
+            yPosition += 10;
+
+            // Prepare table data for PDF
+            const tableData = [["Criteria", "Rating"]];
+            ratingFields.forEach(field => {
+                const displayName = field.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+                const value = typeof employeeData[field] === 'number' ? employeeData[field] : "N/A";
+                tableData.push([displayName, value]);
+            });
+
+            tableData.push(["Promotion", employeeData.promotion]);
 
             // Add table to the PDF
-            const tableData = [
-                ["Criteria", "Rating"],
-                ["Receiving", employeeData.receiving],
-                ["Communication", employeeData.communication],
-                ["Stacking", employeeData.stacking],
-                ["Coordination", employeeData.coordination],
-                ["Higher Responsibilities", employeeData.higherResponsibilities],
-                ["Picking", employeeData.picking],
-                ["Multi-tasking", employeeData.multitasking],
-                ["Maintain Records", employeeData.maintainRecords],
-                ["Computer Literacy", employeeData.computerLiteracy],
-                ["Grooming & Safety", employeeData.grooming],
-                ["Punctuality", employeeData.punctuality],
-                ["Promotion", employeeData.promotion],
-            ];
-
             doc.autoTable({
                 head: [tableData[0]],
                 body: tableData.slice(1),
-                startY: 70,
+                startY: yPosition + 5,
                 theme: "grid",
+                styles: { halign: 'left' },
+                headStyles: { fillColor: [76, 175, 80] } // Matching the button color
             });
 
-            // Add total points and cumulative percentage
-            const finalY = doc.previousAutoTable.finalY + 10;
-            doc.text(`Total Points: ${employeeData.totalPoints}`, 10, finalY);
-            doc.text(`Cumulative Percentage: ${employeeData.cumulativePercentage}%`, 10, finalY + 10);
+            // Calculate position for summary
+            const finalY = doc.lastAutoTable.finalY + 10;
+            doc.text(`Total Points: ${employeeData.totalPoints}`, 14, finalY);
+            doc.text(`Cumulative Percentage: ${employeeData.cumulativePercentage === "N/A" ? "N/A" : employeeData.cumulativePercentage + "%"}`, 14, finalY + 10);
 
             // Save the PDF
-            doc.save(`${employeeData.name}_Warehouse_Report.pdf`);
+            doc.save(`${employeeData.name.replace(/\s+/g, '_')}_Warehouse_Report.pdf`);
         });
     </script>
 </body>
